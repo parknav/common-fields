@@ -1,0 +1,15 @@
+#!/bin/sh
+
+rm -rf .settings/ .project .classpath .idea/ .gradle/ build bin
+
+cd buildSrc/
+rm -rf .settings/ .project .classpath .idea/ .gradle/ build bin
+
+cd ../demo
+rm -rf .settings/ .project .classpath .idea/ .gradle/ build bin
+
+cd ../jackson
+rm -rf .settings/ .project .classpath .idea/ .gradle/ build bin
+
+cd ..
+

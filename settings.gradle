@@ -1,0 +1,4 @@
+rootProject.name = 'commons-fields'
+
+include 'jackson'
+include 'demo'
