@@ -20,7 +20,7 @@ import com.steatoda.commons.fields.HasEntityFields;
  *
  * @see FieldsAsyncService
  */
-public abstract class Batcher<I, C extends HasEntityFields<I, C, F>, F extends Enum<F> & FieldEnum> implements FieldsAsyncService<I, C, F> {
+public class Batcher<I, C extends HasEntityFields<I, C, F>, F extends Enum<F> & FieldEnum> implements FieldsAsyncService<I, C, F> {
 
 	// TODO borrow instances from extend-jobs for get-jobs?
 
