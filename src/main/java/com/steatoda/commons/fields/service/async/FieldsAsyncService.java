@@ -29,6 +29,8 @@ public interface FieldsAsyncService<I, C extends HasEntityFields<I, C, F>, F ext
 			C entity = instance();
 			entity.setId(id);
 			handler.onSuccess(entity);
+			handler.onFinish();
+			handler.onDestroy();
 			return null;
 		}
 		// default to full lookup
