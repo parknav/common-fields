@@ -72,6 +72,7 @@ public class Person extends DemoFieldsEntity<String, Person, Person.Field> {
 		throw new FieldUnavailableException(field);
 	}
 
+	@Override
 	public Person ref() {
 		return ref(getId());
 	}

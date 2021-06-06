@@ -22,7 +22,7 @@ import com.google.common.collect.Sets;
 public interface HasFields<C extends HasFields<C, F>, F extends Enum<F> & FieldEnum> {
 
 	/**
-	 * @return reference to this object (copy with only ID and no fields set)
+	 * @return reference to this object (copy with no fields set, only ID (if object has it) and other attributes not managed by fields)
 	 */
 	C ref();
 
@@ -280,8 +280,8 @@ public interface HasFields<C extends HasFields<C, F>, F extends Enum<F> & FieldE
 	 *
 	 * <p>Should obey following rules:</p>
 	 * <ul>
-	 * 	<li>if {@code other == this}, don't copy, just return current value</li>
-	 * 	<li>if {@code graph} is {@code null}, pull whole subtree</li>
+	 * 	<li>if {@code other == this}, don't copy anything, just return current value</li>
+	 * 	<li>if {@code graph == null}, pull whole sub-tree for every sub-object</li>
 	 * </ul>
 	 *
 	 * <p>Implementations usually use {@link #pull(HasFields, Supplier, Consumer)} or {@link #pull(HasFields, Supplier, Consumer, Function)} when providing own functionality, like:</p>
@@ -669,7 +669,7 @@ public interface HasFields<C extends HasFields<C, F>, F extends Enum<F> & FieldE
 	}
 
 	/**
-	 * Calculates fields graph that consists of all fields (from this object and all subobjects) specified by {@code graph},
+	 * Calculates fields graph that consists of all fields (from this object and all sub-objects) specified by {@code graph},
 	 * but which are not present in current object.
 	 *
 	 * @param graph requested graph
@@ -815,7 +815,7 @@ public interface HasFields<C extends HasFields<C, F>, F extends Enum<F> & FieldE
 	}
 	
 	/**
-	 * <p>(Deeply) intersects this object with {@code graph} ("strips" object to only given graph initialized).</p>
+	 * <p>(Deeply) intersects this object with {@code graph} ("strips" object from any fields not covered by given graph).</p>
 	 * 
 	 * @param graph graph to intersect this object with (may be either subset or superset of object's own graph)
 	 */

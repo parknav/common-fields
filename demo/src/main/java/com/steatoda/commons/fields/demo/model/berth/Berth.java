@@ -48,6 +48,7 @@ public class Berth extends DemoFieldsEntity<String, Berth, Berth.Field> {
 		throw new FieldUnavailableException(field);
 	}
 
+	@Override
 	public Berth ref() {
 		return ref(getId());
 	}

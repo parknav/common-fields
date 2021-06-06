@@ -82,6 +82,7 @@ public class Boat extends DemoFieldsEntity<String, Boat, Boat.Field> {
 		throw new FieldUnavailableException(field);
 	}
 
+	@Override
 	public Boat ref() {
 		return ref(getId());
 	}
