@@ -1,4 +1,5 @@
-rootProject.name = 'commons-fields'
+rootProject.name = 'common-fields-parent'
 
-include 'jackson'
-include 'demo'
+include 'common-fields'
+include 'common-fields-jackson'
+include 'common-fields-demo'

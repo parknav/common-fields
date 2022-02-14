@@ -1,0 +1,61 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+
+idea {
+	module {
+		jdkName = 11
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	implementation 'com.google.guava:guava:30.1.1-jre'
+
+	testImplementation 'junit:junit:4.13.2'
+	testImplementation 'org.slf4j:slf4j-api:1.7.32'
+	testImplementation 'ch.qos.logback:logback-core:1.2.3'
+	testImplementation 'ch.qos.logback:logback-classic:1.2.3'
+	testImplementation 'org.apache.commons:commons-collections4:4.4'
+	testImplementation 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
+	testImplementation project(":common-fields-demo")
+
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
+
+javadoc {
+	options.addBooleanOption('html5', true)
+	options.addStringOption('Xdoclint:none', '-quiet')	// suppress warnings for missing comments
+}
+
+jar {
+	manifest {
+		attributes (
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version
+		)
+	}
+}
+
+artifacts {
+	archives jar
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+}

@@ -1,0 +1,54 @@
+plugins {
+	id 'java-library'
+	id 'maven-publish'
+}
+
+sourceCompatibility = JavaVersion.VERSION_11
+
+idea {
+	module {
+		jdkName = 11
+	}
+}
+
+repositories {
+	mavenCentral()
+}
+
+dependencies {
+
+	api 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'
+
+	implementation 'com.fasterxml.jackson.core:jackson-core:2.12.3'
+	implementation 'com.fasterxml.jackson.core:jackson-databind:2.12.3'
+	implementation project(":common-fields")
+
+	testImplementation 'junit:junit:4.13.2'
+
+}
+
+java {
+	withJavadocJar()
+	withSourcesJar()
+}
+
+jar {
+	manifest {
+		attributes (
+			'Implementation-Title': project.name,
+			'Implementation-Version': project.version
+		)
+	}
+}
+
+artifacts {
+	archives jar
+}
+
+publishing {
+	publications {
+		mavenJava(MavenPublication) {
+			from components.java
+		}
+	}
+}
