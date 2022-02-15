@@ -3,18 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-
-idea {
-	module {
-		jdkName = 11
-	}
-}
-
-repositories {
-	mavenCentral()
-}
-
 dependencies {
 
 	api 'com.fasterxml.jackson.core:jackson-annotations:2.12.3'

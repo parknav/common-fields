@@ -11,7 +11,7 @@
 		</encoder>
 	</appender>
 
-	<logger name="com.steatoda" additivity="false" level="DEBUG">
+	<logger name="com.parknav" additivity="false" level="DEBUG">
 		<appender-ref ref="STDOUT"/>
 	</logger>
 

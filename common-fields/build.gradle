@@ -3,18 +3,6 @@ plugins {
 	id 'maven-publish'
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-
-idea {
-	module {
-		jdkName = 11
-	}
-}
-
-repositories {
-	mavenCentral()
-}
-
 dependencies {
 
 	implementation 'com.google.guava:guava:30.1.1-jre'

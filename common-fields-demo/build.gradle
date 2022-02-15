@@ -3,20 +3,6 @@ plugins {
 	id 'application'
 }
 
-sourceCompatibility = JavaVersion.VERSION_11
-
-idea {
-	module {
-		jdkName = 11
-	}
-}
-
-mainClassName = 'com.steatoda.commons.fields.demo.Demo'
-
-repositories {
-	mavenCentral()
-}
-
 dependencies {
 
 	implementation 'org.slf4j:slf4j-api:1.7.30'
@@ -31,6 +17,10 @@ dependencies {
 	implementation project(":common-fields")
 	implementation project(":common-fields-jackson")
 
+}
+
+application {
+	mainClass = 'com.parknav.common.fields.demo.Demo'
 }
 
 jar {
