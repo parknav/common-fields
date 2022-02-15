@@ -28,9 +28,11 @@ public abstract class FieldsEntity<I, C extends FieldsEntity<I, C, F>, F extends
 	 * Sets entity's ID.
 	 * @param id new entity's ID
 	 */
+	@SuppressWarnings("unchecked")
 	@Override
-	public void setId(I id) {
+	public C setId(I id) {
 		this.id = id;
+		return (C) this;
 	}
 
 	@Override

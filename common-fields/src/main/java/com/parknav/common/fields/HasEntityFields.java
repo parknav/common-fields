@@ -28,7 +28,7 @@ public interface HasEntityFields<I, C extends HasEntityFields<I, C, F>, F extend
 	 *
 	 * @param id entity's unique ID
 	 */
-	void setId(I id);
+	C setId(I id);
 
 	/**
 	 * Ensures entity has all requested fields, fetching missing ones using {@code resolver} if necessary.
