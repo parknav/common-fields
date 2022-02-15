@@ -1,7 +1,13 @@
 package com.parknav.common.fields.jackson;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.MapperFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationFeature;
+import com.fasterxml.jackson.databind.json.JsonMapper;
+import com.fasterxml.jackson.databind.module.SimpleModule;
+import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
+import com.parknav.common.fields.jackson.model.JacksonFieldsEntity;
 import com.parknav.common.fields.jackson.model.Person;
 import org.junit.Assert;
 import org.junit.Before;
@@ -13,7 +19,17 @@ public class JacksonTest {
 
 	@Before
 	public void init() {
-		mapper = new TestObjectMapper();
+		mapper = JsonMapper.builder()
+			.configure(SerializationFeature.INDENT_OUTPUT, true)
+			.disable(MapperFeature.AUTO_DETECT_CREATORS)
+			.disable(MapperFeature.AUTO_DETECT_FIELDS)
+			.disable(MapperFeature.AUTO_DETECT_GETTERS)
+			.disable(MapperFeature.AUTO_DETECT_IS_GETTERS)
+			.addModule(new SimpleModule()
+				.setSerializerModifier(new FieldsSerializerModifier(JacksonFieldsEntity.JsonPropertyId))
+			)
+			.build()
+			.setFilterProvider(new SimpleFilterProvider().addFilter(FieldPropertyFilter.Name, new FieldPropertyFilter().setIgnoreFieldUnavailableException(true)));
 	}
 
 	@Test

@@ -8,11 +8,10 @@ import java.util.EnumSet;
 import java.util.concurrent.CountDownLatch;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.json.JsonMapper;
 import com.fasterxml.jackson.databind.ser.impl.SimpleFilterProvider;
 import com.parknav.common.fields.demo.model.DemoFieldsEntity;
 import com.parknav.common.fields.demo.model.berth.Berth;
-import com.parknav.common.fields.demo.model.berth.BerthDemoService;
-import com.parknav.common.fields.demo.model.berth.BerthService;
 import com.parknav.common.fields.demo.model.marina.Marina;
 import com.parknav.common.fields.demo.model.marina.MarinaDemoCachingService;
 import com.parknav.common.fields.demo.model.marina.MarinaDemoData;
@@ -99,17 +98,17 @@ public class Demo {
 		personAsyncService = new PersonDemoAsyncService();
 		marinaService = new MarinaDemoService();
 		boatService = new BoatDemoService();
-		berthService = new BerthDemoService();
 
-		mapper = new ObjectMapper()
+		mapper = JsonMapper.builder()
 			.configure(SerializationFeature.INDENT_OUTPUT, true)
 			.disable(MapperFeature.AUTO_DETECT_CREATORS)
 			.disable(MapperFeature.AUTO_DETECT_FIELDS)
 			.disable(MapperFeature.AUTO_DETECT_GETTERS)
 			.disable(MapperFeature.AUTO_DETECT_IS_GETTERS)
-			.registerModule(new SimpleModule()
+			.addModule(new SimpleModule()
 				.setSerializerModifier(new FieldsSerializerModifier(DemoFieldsEntity.JsonPropertyId))
 			)
+			.build()
 			.setFilterProvider(new SimpleFilterProvider().addFilter(FieldPropertyFilter.Name, new FieldPropertyFilter().setIgnoreFieldUnavailableException(true)))
 		;
 
@@ -407,7 +406,7 @@ public class Demo {
 		CountDownLatch lock = new CountDownLatch(1);
 
 		Log.info("Fetching person's fields: {}", graph);
-		/*FieldsRequest request = */personAsyncService.get(PersonDemoData.RonId, graph, new FieldsServiceHandler<Person>() {
+		/*FieldsRequest request = */personAsyncService.get(PersonDemoData.RonId, graph, new FieldsServiceHandler<>() {
 			@Override
 			public void onPreRequest(FieldsRequest request) {
 				Log.info("Requesting (show loader in GUI or something)...");
@@ -612,8 +611,6 @@ public class Demo {
 	private final PersonAsyncService personAsyncService;
 	private final MarinaService marinaService;
 	private final BoatService boatService;
-	@SuppressWarnings("unused")
-	private final BerthService berthService;
 	private final ObjectMapper mapper;
 
 }
