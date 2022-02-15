@@ -28,6 +28,10 @@ subprojects { subproject ->
 	}
 
 	repositories {
+		mavenLocal()
+		maven {
+			url 'gcs://parknav-build-repo'
+		}
 		mavenCentral()
 	}
 
