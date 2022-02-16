@@ -9,6 +9,7 @@ import java.util.UUID;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import com.parknav.common.fields.demo.model.berth.Berth;
 import com.parknav.common.fields.demo.model.berth.BerthDemoService;
@@ -138,12 +139,12 @@ public class MarinaDemoService implements MarinaService {
 	}
 
 	@Override
-	public List<Marina> list(Void selector, FieldGraph<Marina.Field> graph) {
+	public Stream<Marina> query(Void selector, FieldGraph<Marina.Field> graph) {
 		throw new UnsupportedOperationException("Outside of scope of this demo");
 	}
 
 	@Override
-	public List<Marina> getAllFieldValues(Void selector, Set<Marina.Field> fields) {
+	public Stream<Marina> queryAllFieldValues(Void selector, Set<Marina.Field> fields) {
 		throw new UnsupportedOperationException("Outside of scope of this demo");
 	}
 

@@ -5,7 +5,7 @@ import com.parknav.common.fields.FieldGraph;
 import com.parknav.common.fields.FieldsEntityCache;
 import com.parknav.common.fields.HasEntityFields;
 
-import java.util.List;
+import java.util.stream.Stream;
 
 /**
  * <p>{@link CRUDFieldsService} implementation that caches objects incrementally.</p>
@@ -46,10 +46,8 @@ public class CachingCRUDFieldsService<I, C extends HasEntityFields<I, C, F>, F e
 	}
 
 	@Override
-	public List<C> list(S selector, FieldGraph<F> graph) {
-		List<C> entities = service.list(selector, graph);
-		entities.forEach(cache::merge);
-		return entities;
+	public Stream<C> query(S selector, FieldGraph<F> graph) {
+		return service.query(selector, graph).peek(cache::merge);
 	}
 
 	@Override

@@ -1,7 +1,7 @@
 package com.parknav.common.fields.service.crud;
 
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.parknav.common.fields.service.FieldsService;
 import com.parknav.common.fields.FieldEnum;
@@ -78,7 +78,7 @@ public interface CRUDFieldsService<I, C extends HasEntityFields<I, C, F>, F exte
 	void delete(C entity);
 
 	/**
-	 * <p>Retrieves list of entities each set to distinct combination of requested fields.</p>
+	 * <p>Retrieves entities with distinct combination of requested fields.</p>
 	 *
 	 * <p>NOTE: returned entities are just placeholders e.g. nor do they exist as such in backing store nor they have ID set.
 	 * Each of them is used just to represent one combination of requested fields in backing store.
@@ -87,9 +87,9 @@ public interface CRUDFieldsService<I, C extends HasEntityFields<I, C, F>, F exte
 	 * @param selector selector to filter entities
 	 * @param fields fields on which to determine distinctiveness
 	 *
-	 * @return list of all combinations of required fields
+	 * @return stream of all combinations of required fields
 	 */
-	List<C> getAllFieldValues(S selector, Set<F> fields);
+	Stream<C> queryAllFieldValues(S selector, Set<F> fields);
 
 	/**
 	 * Counts entities matched by provided {@code selector}.
@@ -101,14 +101,13 @@ public interface CRUDFieldsService<I, C extends HasEntityFields<I, C, F>, F exte
 	int count(S selector);
 
 	/**
-	 * List ALL entities matched by provided {@code selector}. Be careful when there could be large number of such entities.
-	 * In that case, provide domain-specialized list method that supports pagination.
+	 * Retrieves ALL entities matched by provided {@code selector}.
 	 *
 	 * @param selector selector to filter entities
 	 * @param graph fields graph to resolve
 	 *
-	 * @return list of entities selected
+	 * @return stream of entities selected
 	 */
-	List<C> list(S selector, FieldGraph<F> graph);
+	Stream<C> query(S selector, FieldGraph<F> graph);
 
 }

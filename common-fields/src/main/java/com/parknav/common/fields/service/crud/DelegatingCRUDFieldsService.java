@@ -1,7 +1,7 @@
 package com.parknav.common.fields.service.crud;
 
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.parknav.common.fields.FieldEnum;
 import com.parknav.common.fields.FieldGraph;
@@ -45,8 +45,8 @@ public class DelegatingCRUDFieldsService<I, C extends HasEntityFields<I, C, F>, 
 	}
 
 	@Override
-	public List<C> list(S selector, FieldGraph<F> graph) {
-		return delegate.list(selector, graph);
+	public Stream<C> query(S selector, FieldGraph<F> graph) {
+		return delegate.query(selector, graph);
 	}
 
 
@@ -66,8 +66,8 @@ public class DelegatingCRUDFieldsService<I, C extends HasEntityFields<I, C, F>, 
 	}
 
 	@Override
-	public List<C> getAllFieldValues(S selector, Set<F> fields) {
-		return delegate.getAllFieldValues(selector, fields);
+	public Stream<C> queryAllFieldValues(S selector, Set<F> fields) {
+		return delegate.queryAllFieldValues(selector, fields);
 	}
 
 	private final CRUDFieldsService<I, C, F, S> delegate;

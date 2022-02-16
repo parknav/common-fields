@@ -1,7 +1,7 @@
 package com.parknav.common.fields.service.async.crud;
 
-import java.util.List;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import com.parknav.common.fields.FieldEnum;
 import com.parknav.common.fields.FieldGraph;
@@ -75,11 +75,11 @@ public interface CollectionCRUDFieldsAsyncService<I, C extends HasEntityFields<I
 		return instance(entity).delete(handler);
 	}
 	
-	FieldsRequest getAllFieldValues(S selector, Set<F> fields, FieldsServiceHandler<List<C>> handler);
+	FieldsRequest queryAllFieldValues(S selector, Set<F> fields, FieldsServiceHandler<Stream<C>> handler);
 	
 	FieldsRequest count(S selector, FieldsServiceHandler<Integer> handler);
 
-	FieldsRequest list(S selector, FieldGraph<F> graph, FieldsServiceHandler<List<C>> handler);
+	FieldsRequest query(S selector, FieldGraph<F> graph, FieldsServiceHandler<Stream<C>> handler);
 
 	InstanceCRUDFieldsAsyncService<I, C, F> instance(I id);
 	default InstanceCRUDFieldsAsyncService<I, C, F> instance(C entity) { return instance(entity.getId()); }
