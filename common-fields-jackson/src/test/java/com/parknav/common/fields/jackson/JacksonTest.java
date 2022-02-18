@@ -28,8 +28,8 @@ public class JacksonTest {
 			.addModule(new SimpleModule()
 				.setSerializerModifier(new FieldsSerializerModifier(JacksonFieldsEntity.JsonPropertyId))
 			)
-			.build()
-			.setFilterProvider(new SimpleFilterProvider().addFilter(FieldPropertyFilter.Name, new FieldPropertyFilter().setIgnoreFieldUnavailableException(true)));
+			.filterProvider(new SimpleFilterProvider().addFilter(FieldPropertyFilter.Name, new FieldPropertyFilter().setIgnoreFieldUnavailableException(true)))
+			.build();
 	}
 
 	@Test
