@@ -91,6 +91,17 @@ public interface CRUDFieldsService<I, C extends HasEntityFields<I, C, F>, F exte
 	 */
 	Stream<C> queryAllFieldValues(S selector, Set<F> fields);
 
+	default void batch(CRUDBatch<C> batch, FieldGraph<F> graph) {
+
+		for (CRUDBatch.Operation<C> operation : batch.getOperations())
+			switch (operation.getType()) {
+				case Create: create(operation.getEntity(), graph); break;
+				case Modify: modify(operation.getEntity(), graph); break;
+				case Delete: delete(operation.getEntity()); break;
+			}
+
+	}
+
 	/**
 	 * Counts entities matched by provided {@code selector}.
 	 *
