@@ -10,8 +10,8 @@ allprojects {
 
 	group = 'com.parknav'
 
-	//version = 'HEAD-SNAPSHOT'
-	version = '1.2.0'
+	//version = '99-SNAPSHOT'
+	version = '1.2.1'
 
 }
 
