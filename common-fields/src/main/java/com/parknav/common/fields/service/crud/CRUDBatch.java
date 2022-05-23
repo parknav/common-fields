@@ -25,6 +25,6 @@ public interface CRUDBatch<T extends HasEntityFields<?, ?, ?>> {
 	}
 
 	/** List of operation to perform (sequentially) */
-	List<Operation<T>> getOperations();
+	List<? extends Operation<T>> getOperations();
 
 }
