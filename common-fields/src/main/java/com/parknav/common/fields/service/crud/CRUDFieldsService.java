@@ -1,5 +1,6 @@
 package com.parknav.common.fields.service.crud;
 
+import java.util.List;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -91,15 +92,43 @@ public interface CRUDFieldsService<I, C extends HasEntityFields<I, C, F>, F exte
 	 */
 	Stream<C> queryAllFieldValues(S selector, Set<F> fields);
 
-	default void batch(CRUDBatch<C> batch, FieldGraph<F> graph) {
+	/**
+	 * <p>Performs operation in one transactional batch and pulls {@code graph} for each created and modified entity
+	 * (deleted entites are left as-is).</p>
+	 *
+	 * @param operations operations to perform
+	 * @param graph graph to pull into each entity after create/modify
+	 */
+	default void batch(List<? extends CRUDOperation<C>> operations, FieldGraph<F> graph) {
+		operations.forEach(operation -> perform(operation, graph));
+	}
 
-		for (CRUDBatch.Operation<C> operation : batch.getOperations())
-			switch (operation.getType()) {
-				case Create: create(operation.getEntity(), graph); break;
-				case Modify: modify(operation.getEntity(), graph); break;
-				case Delete: delete(operation.getEntity()); break;
-			}
+	/**
+	 * <p>Performs operation in one transactional batch.</p>
+	 *
+	 * <p><b>IMPORTANT:</b> entites are <b>not</b> updated!</p>
+	 *
+	 * @param operations operations to perform
+	 */
+	default void batch(Stream<? extends CRUDOperation<C>> operations) {
+		FieldGraph<F> graph = FieldGraph.noneOf(instance().getFieldsClass());
+		operations.forEach(operation -> perform(operation, graph));
+	}
 
+	/**
+	 * <p>Performs one operation and pulls {@code graph} for each created and modified entity
+	 * (deleted entites are left as-is).</p>
+	 *
+	 * @param operation operation to perform
+	 * @param graph graph to pull into each created or modified entity
+	 */
+	default void perform(CRUDOperation<C> operation, FieldGraph<F> graph) {
+		switch (operation.getType()) {
+			case Create: create(operation.getEntity(), graph); return;
+			case Modify: modify(operation.getEntity(), graph); return;
+			case Delete: delete(operation.getEntity()); return;
+		}
+		throw new UnsupportedOperationException("Unsupported CRUD operation: " + operation.getType());
 	}
 
 	/**
